@@ -1,3 +1,3 @@
 @echo off
-pwsh -Noprofile -ExecutionPolicy RemoteSigned -File main.ps1
+pwsh -Noprofile -ExecutionPolicy RemoteSigned -File ./main.ps1
 pause
