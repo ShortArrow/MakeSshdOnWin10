@@ -7,7 +7,7 @@ function Test-Admin {
 }
 
 
-if ([int]$psversiontable.psversion.major -le 6) {
+if ([int]$psversiontable.psversion.major -lt 6) {
     Write-Host "PowerShell version need 6 or later" -BackgroundColor Red -ForegroundColor White
 }
 else {
