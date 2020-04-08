@@ -1,3 +1,29 @@
+
+function Test-Admin {
+    $wid = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+    $prp = New-Object System.Security.Principal.WindowsPrincipal($wid)
+    $adm = [System.Security.Principal.WindowsBuiltInRole]::Administrator
+    $prp.IsInRole($adm)
+}
+
+
+if ([int]$psversiontable.psversion.major -le 3) {
+    Write-Host "PowerShell version need 3 or later" -BackgroundColor Red -ForegroundColor White
+}
+else {
+    Write-Host "PowerShell version is Fit" -BackgroundColor Green -ForegroundColor White
+}
+
+
+if ((Test-Admin) -eq $false) {
+    Write-Host 'You need Administrator privileges to run this.' -BackgroundColor Red -ForegroundColor White
+    # Abort the script
+    # this will work only if you are actually running a script
+    # if you did not save your script, the ISE editor runs it as a series
+    # of individual commands, so break will not break then.
+    return
+}
+
 [Object[]]$input
 $input=get-WindowsCapability -Online | Where-Object -Property Name -Match "^OpenSSH.*"
 [Microsoft.Dism.Commands.BasicCapabilityObject]$server
