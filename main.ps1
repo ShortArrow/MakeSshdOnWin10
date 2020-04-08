@@ -52,4 +52,5 @@ $input=Get-NetFirewallRule |Where-Object -Property name -Match ^sshd$
 if($input -eq $null){
     New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
 }
-    
+
+Write-Host "Finish!!"
