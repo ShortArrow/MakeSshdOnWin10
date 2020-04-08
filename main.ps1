@@ -7,8 +7,8 @@ function Test-Admin {
 }
 
 
-if ([int]$psversiontable.psversion.major -le 3) {
-    Write-Host "PowerShell version need 3 or later" -BackgroundColor Red -ForegroundColor White
+if ([int]$psversiontable.psversion.major -le 6) {
+    Write-Host "PowerShell version need 6 or later" -BackgroundColor Red -ForegroundColor White
 }
 else {
     Write-Host "PowerShell version is Fit" -BackgroundColor Green -ForegroundColor White
