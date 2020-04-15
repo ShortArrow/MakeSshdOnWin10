@@ -24,12 +24,12 @@ if ((Test-Admin) -eq $false) {
     return
 }
 
-[Object[]]$input
-$input=get-WindowsCapability -Online | Where-Object -Property Name -Match "^OpenSSH.*"
-[Microsoft.Dism.Commands.BasicCapabilityObject]$server
-$server=$input| Where-Object -Property Name -Match ".*Server.*"
-[Microsoft.Dism.Commands.BasicCapabilityObject]$client
-$client=$input| Where-Object -Property Name -Match ".*Client.*"
+[Object[]]$inputdata=$null
+$inputdata=get-WindowsCapability -Online | Where-Object -Property Name -Match "^OpenSSH.*"
+[Microsoft.Dism.Commands.BasicCapabilityObject]$server=$null
+$server=$inputdata| Where-Object -Property Name -Match ".*Server.*"
+[Microsoft.Dism.Commands.BasicCapabilityObject]$client=$null
+$client=$inputdata| Where-Object -Property Name -Match ".*Client.*"
 
 if ($server.State -ne 'Installed') {
     # Install the OpenSSH Client
@@ -48,8 +48,8 @@ Set-Service -Name sshd -StartupType 'Automatic'
 Get-NetFirewallRule -Name *ssh*
 # There should be a firewall rule named "OpenSSH-Server-In-TCP", which should be enabled
 # If the firewall does not exist, create one
-$input=Get-NetFirewallRule |Where-Object -Property name -Match ^sshd$
-if($input -eq $null){
+$inputdata=Get-NetFirewallRule |Where-Object -Property name -Match ^sshd$
+if($null -eq $inputdata){
     New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
 }
 
